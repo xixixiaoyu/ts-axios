@@ -2,8 +2,8 @@ import { AxiosRequestConfig, AxiosPromise, AxiosResponse } from './types'
 import { parseHeader } from './helpers/headers'
 
 export default function xhr(config: AxiosRequestConfig): AxiosPromise {
-  return new Promise(resolve => {
-    const { url, method = 'get', data = null, headers, responseType } = config
+  return new Promise((resolve, reject) => {
+    const { url, method = 'get', data = null, headers, responseType, timeout } = config
     // 实例化 XMLHttpRequest 对象 发送请求 传递参数
     const request = new XMLHttpRequest()
 
@@ -11,10 +11,19 @@ export default function xhr(config: AxiosRequestConfig): AxiosPromise {
       request.responseType = responseType
     }
 
+    if (timeout) {
+      request.timeout = timeout
+    }
+
     request.open(method.toUpperCase(), url, true)
 
     request.onreadystatechange = function() {
       if (request.readyState !== 4) {
+        return
+      }
+
+      // 网络错误或者超时错误的时候，该值为 0
+      if (request.status === 0) {
         return
       }
 
@@ -30,7 +39,15 @@ export default function xhr(config: AxiosRequestConfig): AxiosPromise {
         config,
         request
       }
-      resolve(response)
+      handleResponse(response)
+    }
+
+    request.onerror = function() {
+      reject(new Error('Network Error'))
+    }
+
+    request.ontimeout = function handleTimeout() {
+      reject(new Error(`Timeout of ${timeout} ms exceeded`))
     }
 
     // 处理 headers
@@ -43,5 +60,13 @@ export default function xhr(config: AxiosRequestConfig): AxiosPromise {
     })
 
     request.send(data)
+
+    function handleResponse(response: AxiosResponse) {
+      if ((response.status >= 200 && response.status < 300) || response.status === 304) {
+        resolve(response)
+      } else {
+        reject(new Error(`Request failed with status code ${response.status}`))
+      }
+    }
   })
 }
