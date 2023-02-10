@@ -31,7 +31,6 @@ export function deepMerge(...objs: any[]): any {
           if (isPlainObject(result[key])) {
             result[key] = deepMerge(result[key], val)
           } else {
-            console.log('result[key]', result[key])
             result[key] = deepMerge({}, val)
           }
         } else {

@@ -1,7 +1,7 @@
 import axios from '../../src/index'
 import qs from 'qs'
 
-axios.defaults.headers.common['hello'] = 'world'
+axios.defaults.headers.common['hello'] = '123'
 
 axios({
   url: '/config/post',
