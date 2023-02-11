@@ -54,3 +54,30 @@ export default function buildURL(url: string, params?: any): string {
 
   return url
 }
+
+interface URLOrigin {
+  protocol: string
+  host: string
+}
+
+// 是否同源
+export function isURLSameOrigin(requestURL: string): boolean {
+  const parsedOrigin = resolveURL(requestURL)
+
+  return (
+    parsedOrigin.protocol === currentOrigin.protocol && parsedOrigin.host === currentOrigin.host
+  )
+}
+
+// 通过 a 标签解析出 protocol, host
+const parsedURLNode = document.createElement('a')
+const currentOrigin = resolveURL(window.location.href)
+function resolveURL(url: string): URLOrigin {
+  parsedURLNode.setAttribute('href', url)
+  const { protocol, host } = parsedURLNode
+
+  return {
+    protocol,
+    host
+  }
+}
