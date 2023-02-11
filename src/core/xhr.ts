@@ -51,7 +51,7 @@ export default function xhr(config: AxiosRequestConfig): AxiosPromise {
       reject(createError(`Timeout of ${timeout} ms exceeded`, config, 'ECONNABORTED', request))
     }
 
-    // 处理 headers
+    // 设置 headers
     Object.keys(headers).forEach(name => {
       if (data === null && name.toLowerCase() === 'content-type') {
         delete headers[name]

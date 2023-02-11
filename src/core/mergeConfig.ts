@@ -14,28 +14,26 @@ function fromVal2Strat(val1: any, val2: any): any {
     return val2
   }
 }
-
-function deepMergeStrat(val1: any, val2: any): any {
-  if (isPlainObject(val2)) {
-    return deepMerge(val1, val2)
-  } else if (typeof val2 === 'undefined') {
-    return val2
-  } else if (isPlainObject(val1)) {
-    return deepMerge(val1)
-  } else if (typeof val1 !== 'undefined') {
-    return val1
-  }
-}
-
-const stratKeysDeepMerge = ['headers']
-
-stratKeysDeepMerge.forEach(key => {
-  strats[key] = deepMergeStrat
-})
-
 const stratKeysFromVal2 = ['url', 'params', 'data']
 stratKeysFromVal2.forEach(key => {
   strats[key] = fromVal2Strat
+})
+
+// 对象的合并,比如headers
+function deepMergeStrat(val1: any, val2: any): any {
+  if (isPlainObject(val2)) {
+    return deepMerge(val1, val2)
+  } else if (typeof val2 !== 'undefined') {
+    return val2
+  } else if (isPlainObject(val1)) {
+    return deepMerge(val1)
+  } else {
+    return val1
+  }
+}
+const stratKeysDeepMerge = ['headers']
+stratKeysDeepMerge.forEach(key => {
+  strats[key] = deepMergeStrat
 })
 
 export default function mergeConfig(

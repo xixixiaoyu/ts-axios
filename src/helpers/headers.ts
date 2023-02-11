@@ -15,6 +15,7 @@ function normalizeHeaderName(headers: any, normalizedName: string): void {
   })
 }
 
+// 设置默认请求头的的 Content-Type
 export function processHeaders(headers: any, data: any): any {
   normalizeHeaderName(headers, 'Content-Type')
 
@@ -24,6 +25,7 @@ export function processHeaders(headers: any, data: any): any {
       headers['Content-Type'] = 'application/json;charset=utf-8'
     }
   }
+
   return headers
 }
 
@@ -54,7 +56,7 @@ export function flattenHeaders(headers: any, method: Method): any {
     return headers
   }
 
-  headers = deepMerge(headers.common || {}, headers[method] || {} || headers)
+  headers = deepMerge(headers.common || {}, headers[method] || {}, headers)
 
   const methodsToDelete = ['delete', 'get', 'head', 'options', 'post', 'put', 'patch', 'common']
 
