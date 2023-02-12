@@ -16,8 +16,8 @@ interface Interceptors {
   response: interceptorManager<AxiosResponse>
 }
 
-interface PromiseChain {
-  resolved: ResolvedFn | ((config: AxiosRequestConfig) => AxiosPromise)
+interface PromiseChain<T> {
+  resolved: ResolvedFn<T> | ((config: AxiosRequestConfig) => AxiosPromise)
   rejected?: RejectedFn
 }
 
@@ -47,7 +47,7 @@ export default class Axios {
 
     config.method = config.method.toLowerCase()
 
-    const chain: PromiseChain[] = [{ resolved: dispatchRequest, rejected: undefined }]
+    const chain: PromiseChain<any>[] = [{ resolved: dispatchRequest, rejected: undefined }]
 
     this.interceptors.request.forEach(interceptor => {
       chain.unshift(interceptor)
