@@ -1,8 +1,9 @@
 import { AxiosRequestConfig, AxiosPromise, AxiosResponse } from '../types'
-import buildURL from '../helpers/url'
+import buildURL, { combineURL, isAbsoluteURL } from '../helpers/url'
 import xhr from './xhr'
 import { flattenHeaders } from '../helpers/headers'
 import transform from './transform'
+
 function axios(config: AxiosRequestConfig): AxiosPromise {
   throwIfCancellationRequested(config)
   processConfig(config)
@@ -21,7 +22,10 @@ function processConfig(config: AxiosRequestConfig): void {
 
 // 处理 url 格式
 function transformUrl(config: AxiosRequestConfig): string {
-  const { url, params, paramsSerializer } = config
+  let { url, params, paramsSerializer, baseURL } = config
+  if (baseURL && !isAbsoluteURL(url!)) {
+    url = combineURL(baseURL, url)
+  }
   return buildURL(url!, params, paramsSerializer)
 }
 
