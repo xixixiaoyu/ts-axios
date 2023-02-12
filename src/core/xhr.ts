@@ -1,5 +1,5 @@
 import { AxiosRequestConfig, AxiosPromise, AxiosResponse } from '../types'
-import { parseHeader } from '../helpers/headers'
+import { parseHeaders } from '../helpers/headers'
 import { createError } from '../helpers/error'
 import { isURLSameOrigin } from '../helpers/url'
 import cookie from '../helpers/cookie'
@@ -63,7 +63,7 @@ export default function xhr(config: AxiosRequestConfig): AxiosPromise {
           return
         }
 
-        const responseHeaders = parseHeader(request.getAllResponseHeaders())
+        const responseHeaders = parseHeaders(request.getAllResponseHeaders())
         const responseData =
           responseType && responseType !== 'text' ? request.response : request.responseText
 
