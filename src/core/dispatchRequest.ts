@@ -8,9 +8,17 @@ function axios(config: AxiosRequestConfig): AxiosPromise {
   throwIfCancellationRequested(config)
   processConfig(config)
 
-  return xhr(config).then(res => {
-    return transformResponseData(res)
-  })
+  return xhr(config).then(
+    res => {
+      return transformResponseData(res)
+    },
+    err => {
+      if (err && err.response) {
+        err.response = transformResponseData(err.response)
+      }
+      return Promise.reject(err)
+    }
+  )
 }
 
 // 请求发送前处理 config
