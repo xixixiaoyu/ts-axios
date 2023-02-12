@@ -98,7 +98,7 @@ export default function xhr(config: AxiosRequestConfig): AxiosPromise {
 
     function processHeader() {
       if (isFormData(data)) {
-        delete headers['Content-type']
+        delete headers['Content-Type']
       }
 
       // 只需要设置 withCredentials 或者同域
