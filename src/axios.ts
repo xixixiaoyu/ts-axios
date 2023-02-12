@@ -22,6 +22,17 @@ axios.create = function(config) {
   return createInstance(mergeConfig(defaults, config))
 }
 
+axios.all = function(promises) {
+  return Promise.all(promises)
+}
+
+axios.spread = function spread(callback) {
+  return function warp(arr) {
+    return callback.apply(null, arr)
+  }
+}
+
+axios.Axios = Axios
 axios.CancelToken = CancelToken
 axios.Cancel = Cancel
 axios.isCancel = isCancel

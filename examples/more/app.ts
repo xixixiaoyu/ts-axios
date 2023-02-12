@@ -159,41 +159,41 @@ import NProgress from 'nprogress'
 //     console.log(res)
 //   })
 
-const instance = axios.create({
-  baseURL: 'https://image-static.segmentfault.com'
-})
-
-instance.get('/187/711/1877117021-cbb22e10c0225528_fix732.jpg')
-
-instance.get('https://image-static.segmentfault.com/187/711/1877117021-cbb22e10c0225528_fix732')
-
-// function getA() {
-//   return axios.get('/more/A')
-// }
-
-// function getB() {
-//   return axios.get('/more/B')
-// }
-
-// axios.all([getA(), getB()]).then(
-//   axios.spread(function(resA, resB) {
-//     console.log(resA.data)
-//     console.log(resB.data)
-//   })
-// )
-
-// axios.all([getA(), getB()]).then(([resA, resB]) => {
-//   console.log(resA.data)
-//   console.log(resB.data)
+// const instance = axios.create({
+//   baseURL: 'https://image-static.segmentfault.com'
 // })
 
-// const fakeConfig = {
-//   baseURL: 'https://www.baidu.com/',
-//   url: '/user/12345',
-//   params: {
-//     idClient: 1,
-//     idTest: 2,
-//     testString: 'thisIsATest'
-//   }
-// }
-// console.log(axios.getUri(fakeConfig))
+// instance.get('/187/711/1877117021-cbb22e10c0225528_fix732.jpg')
+
+// instance.get('https://image-static.segmentfault.com/187/711/1877117021-cbb22e10c0225528_fix732')
+
+function getA() {
+  return axios.get('/more/A')
+}
+
+function getB() {
+  return axios.get('/more/B')
+}
+
+axios.all([getA(), getB()]).then(
+  axios.spread((resA, resB) => {
+    console.log(resA.data)
+    console.log(resB.data)
+  })
+)
+
+axios.all([getA(), getB()]).then(([resA, resB]) => {
+  console.log(resA.data)
+  console.log(resB.data)
+})
+
+const fakeConfig = {
+  baseURL: 'https://www.baidu.com/',
+  url: '/user/12345',
+  params: {
+    idClient: 1,
+    idTest: 2,
+    testString: 'thisIsATest'
+  }
+}
+console.log(axios.getUri(fakeConfig))

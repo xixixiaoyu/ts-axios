@@ -21,7 +21,7 @@ function processConfig(config: AxiosRequestConfig): void {
 }
 
 // 处理 url 格式
-function transformUrl(config: AxiosRequestConfig): string {
+export function transformUrl(config: AxiosRequestConfig): string {
   let { url, params, paramsSerializer, baseURL } = config
   if (baseURL && !isAbsoluteURL(url!)) {
     url = combineURL(baseURL, url)
