@@ -1,5 +1,5 @@
 {
-  "name": "ts-axios-new",
+  "name": "yun-ts-axios",
   "version": "0.1.5",
   "description": "",
   "keywords": [],
@@ -9,7 +9,7 @@
   "files": [
     "dist"
   ],
-  "author": "yunmu",
+  "author": "yunmu <yunmucoder@163.com>",
   "repository": {
     "type": "git",
     "url": "https://github.com/xixixiaoyu/ts-axios"
